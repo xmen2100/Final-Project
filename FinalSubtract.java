@@ -7,8 +7,8 @@ public class FinalSubtract {
     Scanner floors=new Scanner(System.in);
     int floor = floors.nextInt();
 
-    int sub1 = (int)((Math.random() * (10+floor+1)+ 1));
-    int sub2 = (int)((Math.random() * (10+floor+1)+ 1));
+    int sub1 = (int)((Math.random() * ((10+floor)+1)+ 1));
+    int sub2 = (int)((Math.random() * ((10+floor)+1)+ 1));
 
     int subtraction=sub1-sub2;
     System.out.println("You will need to defeat me with a perfect value to get "+subtraction);
