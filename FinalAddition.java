@@ -7,8 +7,8 @@ public class FinalAddition {
     Scanner floors=new Scanner(System.in);
     int floor = floors.nextInt();
 
-    int add1 = (int)((Math.random() * (10+floor+1)+ 1));
-    int add2 = (int)((Math.random() * (10+floor+1)+ 1));
+    int add1 = (int)((Math.random() * ((10+floor)+1)+ 1));
+    int add2 = (int)((Math.random() * ((10+floor)+1)+ 1));
 
     int addition=add1+add2;
     System.out.println("You will need to defeat me with a perfect value to get "+addition);
