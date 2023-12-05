@@ -7,8 +7,8 @@ public class FinalMultiply {
     Scanner floors=new Scanner(System.in);
     int floor = floors.nextInt();
 
-    int mult1 = (int)((Math.random() * (10+floor+1)+ 1));
-    int mult2 = (int)((Math.random() * (10+floor+1)+ 1));
+    int mult1 = (int)((Math.random() * ((10+floor)+1)+ 1));
+    int mult2 = (int)((Math.random() * ((10+floor)+1)+ 1));
 
     int multiply=mult1*mult2;
     System.out.println("You will need to defeat me with a perfect value to get "+multiply);
