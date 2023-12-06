@@ -10,6 +10,9 @@ public class Map {
     static int enemyXcoord = 10; // x coord for enemy (ALWAYS subtract 1)
     static int enemyYcoord = 10; // y coord for enemy (ALWAYS subtract 1)
 
+    // number of enemy to defeat
+    static int targetNumEnemyToDefeat = 5; // number of enemy to defeat
+
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
         playMap(userInputScanner);
@@ -36,7 +39,8 @@ public class Map {
 
         // game loop
         boolean exitReached = false;
-        while (!exitReached) {
+        int numEnemyDefeated = 0; // init num of enemy defeated
+        while (!exitReached) { // defeat at least 1 enemy
             // detect user input
             char move = getUserMove(userInputScanner);
 
@@ -63,9 +67,6 @@ public class Map {
             boolean isValidMove = newPlayerYcoord >= 0 && newPlayerYcoord < rows && newPlayerXcoord >= 0
                     && newPlayerXcoord < columns && gameMap[newPlayerYcoord][newPlayerXcoord] != '#';
 
-            // Check if the player reached the exit
-            exitReached = newPlayerYcoord == exitYcoord && newPlayerXcoord == exitXcoord;
-
             // check if player land on enemy
             boolean landedOnEnemy = newPlayerYcoord == enemyYcoord && newPlayerXcoord == enemyXcoord;
 
@@ -85,12 +86,16 @@ public class Map {
                 if (landedOnEnemy) {
                     try {
                         executeEnemyBattle();
+                        numEnemyDefeated++; // increase num of enemy defeated
                     }
                     catch (IOException e) {
                         e.printStackTrace(); // display error message if error
             }
         }
     }
+            
+            // Check if the player reached the exit
+            exitReached = newPlayerYcoord == exitYcoord && newPlayerXcoord == exitXcoord && numEnemyDefeated >= targetNumEnemyToDefeat; // choose how many enemies to defeat
 
             // clear console
             System.out.println("\u001b[2J\u001b[H");
@@ -138,7 +143,7 @@ public class Map {
         }
 
         map[exitYcoord][exitXcoord] = 'X'; // X for exit
-        map[enemyYcoord][enemyXcoord] = '!'; // enemy
+        map[enemyYcoord][enemyXcoord] = '?'; // enemy
         return map;
     }
 
@@ -152,6 +157,8 @@ public class Map {
     }
 
     public static char getUserMove(Scanner sc) {
+        System.out.println("Welcome to Map1");
+        System.out.println("Defeat " + targetNumEnemyToDefeat + " Enemies to Advance." );
         System.out.print("Enter your move (W/A/S/D): ");
         char move = sc.next().charAt(0);
         sc.nextLine();
