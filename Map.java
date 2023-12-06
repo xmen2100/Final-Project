@@ -52,7 +52,7 @@ public class Map {
             // Update player position only if it's a valid move
             if (isValidMove) {
                 // Clear previous player position
-                gameMap[playerYcoord][playerXcoord] = '.';
+                gameMap[playerYcoord][playerXcoord] = '-';
     
                 // Set new player position
                 gameMap[newPlayerYcoord][newPlayerXcoord] = '@';
@@ -79,7 +79,7 @@ public class Map {
         // these are empty spaces
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                map[i][j] = '.';
+                map[i][j] = '-';
             }
         }
 
@@ -157,7 +157,7 @@ public class Map {
         // Update player position only if it's a valid move
         if (isValidMove) {
             // Clear previous player position
-            map[playerYcoord][playerXcoord] = '.';
+            map[playerYcoord][playerXcoord] = '-';
     
             // Set new player position
             map[newPlayerYcoord][newPlayerXcoord] = '@';
