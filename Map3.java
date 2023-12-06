@@ -1,9 +1,8 @@
-import java.io.*;
 import java.util.Scanner;
 
-public class Map {
+public class Map3 {
     // exit coord
-    static int exitXcoord = 51; // x coord for exit (ALWAYS subtract 1)
+    static int exitXcoord = 109; // x coord for exit (ALWAYS subtract 1)
     static int exitYcoord = 0; // y coord for exit (ALWAYS subtract 1)
 
     public static void main(String[] args) {
@@ -13,16 +12,16 @@ public class Map {
 
     public static void playMap(Scanner userInputScanner) {
         // how many rows (for Y coord)
-        int rows = 27;
+        int rows = 45;
         // how many columns (for X coord)
-        int columns = 55;
+        int columns = 120;
 
         // 2d array of chars
         char[][] gameMap = generateMap(rows, columns);
 
         // starting player coords (ALWAYS make 1 LESS in x and y) if x = 10, choose x = 9, if y = 20, choose y = 19, etc
-        int playerXcoord = 5; // x coord for player '#' are included
-        int playerYcoord = 24; // y coord for player '#' are included
+        int playerXcoord = 9; // x coord for player '#' are included
+        int playerYcoord = 41; // y coord for player '#' are included
 
         // player
         gameMap[playerYcoord][playerXcoord] = '@';
@@ -82,20 +81,16 @@ public class Map {
             // print updated map
             printMap(gameMap);
 
-            // if reach exit, run new Java file
+            // if reach exit, win game!
             if (exitReached) {
-                try {
-                    // compile and run map2 within map
-                    executeMap2();
+                    // PRINT WIN MESSAGE
+                    System.out.print("You completed all 3 Maps!");
 
-                    // Exit the program after running Map2
+                    // Exit the program after running Map3
                     System.exit(0);
-                } catch (IOException e) {
-                    e.printStackTrace(); // display error message if error
-                }
+                } 
             }
         }
-    }
 
     public static char[][] generateMap(int x, int y) {
         // plug in the number of rows and columns in the map
@@ -134,73 +129,10 @@ public class Map {
     }
 
     public static char getUserMove(Scanner sc) {
+        System.out.println("Welcome to Map3");
         System.out.print("Enter your move (W/A/S/D): ");
         char move = sc.next().charAt(0);
         sc.nextLine();
         return move;
-    }
-
-    public static void executeMap2() throws IOException {
-        // command to compile Map2
-        String compileCommand = "javac Map2.java";
-
-        // create a process builder to start a new program
-        ProcessBuilder compileBuilder = new ProcessBuilder(compileCommand.split("\\s+"));
-        // sets the working directory for the new process to the current working directory
-        compileBuilder.directory(new File(System.getProperty("user.dir"))); // Set the working directory
-
-        // redirect the output and error streams
-        compileBuilder.redirectErrorStream(true);
-        // starts process Map2
-        Process compileProcess = compileBuilder.start();
-
-        // obtain the output stream
-        try (InputStream compileInputStream = compileProcess.getInputStream();
-             Scanner compileScanner = new Scanner(compileInputStream)) {
-
-            while (compileScanner.hasNextLine()) {
-                System.out.println(compileScanner.nextLine());
-            }
-
-            // wait for the compilation process to complete
-            int compileExitCode = compileProcess.waitFor();
-
-            if (compileExitCode == 0) {
-                // if compilation is successful, run Map2
-                executeMap2Run();
-            } else {
-                System.out.println("Error: Map2 compilation failed!");
-            }
-
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static void executeMap2Run() throws IOException {
-        // command to run Map2
-        String runCommand = "java Map2";
-    
-        // create a process builder to start the new program
-        ProcessBuilder runBuilder = new ProcessBuilder(runCommand.split("\\s+"));
-        runBuilder.directory(new File(System.getProperty("user.dir"))); // Set the working directory
-    
-        // inherit input, output, and error streams
-        runBuilder.inheritIO();
-    
-        // starts process Map2
-        Process runProcess = runBuilder.start();
-    
-        try {
-            // wait for the process to complete
-            int runExitCode = runProcess.waitFor();
-    
-            if (runExitCode != 0) {
-                // print an error message
-                System.out.println("Error: Map2 run did not execute successfully!");
-            }
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
     }
 }
