@@ -1,27 +1,25 @@
 import java.io.File;
-import java.io.FileDescriptor;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Scanner;
 
-public class Map {
+public class Map2 {
     // exit coord
-    static int exitXcoord = 51;     // x coord for exit (ALWAYS subtract 1)
+    static int exitXcoord = 46;     // x coord for exit (ALWAYS subtract 1)
     static int exitYcoord = 0;     // y coord for exit (ALWAYS subtract 1)
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
         // how many rows (for Y coord)
         int rows = 27;
         // how many columns (for X coord)
-        int columns = 55;
+        int columns = 50;
     
         // 2d array of chars
         char[][] gameMap = generateMap(rows, columns);
     
         // starting player coords (ALWAYS make 1 LESS in x and y) if x = 10, choose x = 9, if y = 20, choose y = 19, etc
         int playerXcoord = 5;   // x coord for player '#' are included 
-        int playerYcoord = 24;   // y coord for player '#' are included
+        int playerYcoord = 21;   // y coord for player '#' are included
 
         // player
         gameMap[playerYcoord][playerXcoord] = '@';
@@ -185,9 +183,6 @@ public class Map {
         }
     }
     public static void executeMap2() throws IOException {
-        // Close standard input
-        System.in.close();
-
         // command to compile Map2
         String compileCommand = "javac Map2.java";
 
@@ -221,10 +216,6 @@ public class Map {
         } 
         catch (InterruptedException e) {
             e.printStackTrace();
-        }
-        finally {
-            // Reopen standard input
-            System.setIn(new FileInputStream(FileDescriptor.in));
         }
     }
 
