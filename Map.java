@@ -6,6 +6,10 @@ public class Map {
     static int exitXcoord = 51; // x coord for exit (ALWAYS subtract 1)
     static int exitYcoord = 0; // y coord for exit (ALWAYS subtract 1)
 
+    // enemy coord
+    static int enemyXcoord = 10; // x coord for enemy (ALWAYS subtract 1)
+    static int enemyYcoord = 10; // y coord for enemy (ALWAYS subtract 1)
+
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
         playMap(userInputScanner);
@@ -62,6 +66,9 @@ public class Map {
             // Check if the player reached the exit
             exitReached = newPlayerYcoord == exitYcoord && newPlayerXcoord == exitXcoord;
 
+            // check if player land on enemy
+            boolean landedOnEnemy = newPlayerYcoord == enemyYcoord && newPlayerXcoord == enemyXcoord;
+
             // Update player position only if it's a valid move
             if (isValidMove) {
                 // Clear previous player position
@@ -73,7 +80,17 @@ public class Map {
                 // Update player coordinates after the move is validated
                 playerXcoord = newPlayerXcoord;
                 playerYcoord = newPlayerYcoord;
+
+                //if player lands on enemy
+                if (landedOnEnemy) {
+                    try {
+                        executeEnemyBattle();
+                    }
+                    catch (IOException e) {
+                        e.printStackTrace(); // display error message if error
             }
+        }
+    }
 
             // clear console
             System.out.println("\u001b[2J\u001b[H");
@@ -96,6 +113,7 @@ public class Map {
             }
         }
     }
+    
 
     public static char[][] generateMap(int x, int y) {
         // plug in the number of rows and columns in the map
@@ -120,7 +138,7 @@ public class Map {
         }
 
         map[exitYcoord][exitXcoord] = 'X'; // X for exit
-
+        map[enemyYcoord][enemyXcoord] = '!'; // enemy
         return map;
     }
 
@@ -138,6 +156,70 @@ public class Map {
         char move = sc.next().charAt(0);
         sc.nextLine();
         return move;
+    }
+
+    public static void executeEnemyBattle() throws IOException {
+        // command to compile MonsterBattle
+        String compileCommand2 = "javac finalMath.java";
+
+        // create a process builder to start a new program
+        ProcessBuilder battleBuilder = new ProcessBuilder(compileCommand2.split("\\s+"));
+        // sets the working directory for the new process to the current working directory
+        battleBuilder.directory(new File(System.getProperty("user.dir"))); // Set the working directory
+
+        // redirect the output and error streams
+        battleBuilder.redirectErrorStream(true);
+        // starts process EnemyBattle
+        Process battleProcess = battleBuilder.start();
+
+        // obtain the output stream
+        try (InputStream battleInputStream = battleProcess.getInputStream();
+             Scanner battleScanner = new Scanner(battleInputStream)) {
+
+            while (battleScanner.hasNextLine()) {
+                System.out.println(battleScanner.nextLine());
+            }
+
+            // wait for the battle process to complete
+            int battleExitCode = battleProcess.waitFor();
+
+            if (battleExitCode == 0) {
+                // if compilation is successful, run finalMath
+                executeEnemyBattleRun();
+            } else {
+                System.out.println("Error: finalMath compilation failed!");
+            }
+        } 
+        catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void executeEnemyBattleRun() throws IOException {
+        // command to run finalMath
+        String runCommand = "java finalMath";
+    
+        // create a process builder to start the new program
+        ProcessBuilder runBuilder = new ProcessBuilder(runCommand.split("\\s+"));
+        runBuilder.directory(new File(System.getProperty("user.dir"))); // Set the working directory
+    
+        // inherit input, output, and error streams
+        runBuilder.inheritIO();
+    
+        // starts process finalMath
+        Process runProcess = runBuilder.start();
+    
+        try {
+            // wait for the process to complete
+            int runExitCode = runProcess.waitFor();
+    
+            if (runExitCode != 0) {
+                // print an error message
+                System.out.println("Error: finalMath did not execute successfully!");
+            }
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
     }
 
     public static void executeMap2() throws IOException {
@@ -171,8 +253,8 @@ public class Map {
             } else {
                 System.out.println("Error: Map2 compilation failed!");
             }
-
-        } catch (InterruptedException e) {
+        } 
+        catch (InterruptedException e) {
             e.printStackTrace();
         }
     }
@@ -197,7 +279,7 @@ public class Map {
     
             if (runExitCode != 0) {
                 // print an error message
-                System.out.println("Error: Map2 run did not execute successfully!");
+                System.out.println("Error: Map2 did not execute successfully!");
             }
         } catch (InterruptedException e) {
             e.printStackTrace();
