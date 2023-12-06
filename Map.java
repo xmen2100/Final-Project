@@ -2,18 +2,18 @@ import java.util.Scanner;
 
 public class Map {
     public static void main(String[] args) {
-        // how many rows
+        // how many rows (for Y coord)
         int rows = 27;
-        // how many columns
-        int columns = 50;
+        // how many columns (for X coord)
+        int columns = 55;
     
         // 2d array of chars
         char[][] gameMap = generateMap(rows, columns);
     
-        // starting player coords
-        int playerXcoord = 25;   // x coord for player
-        int playerYcoord = 25;   // y coord for player
-    
+        // starting player coords (ALWAYS make 1 LESS in x and y) if x = 10, choose x = 9, if y = 20, choose y = 19, etc
+        int playerXcoord = 5;   // x coord for player
+        int playerYcoord = 24;   // y coord for player
+
         // player
         gameMap[playerYcoord][playerXcoord] = '@';
     
