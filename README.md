@@ -3,5 +3,4 @@
 ## 'Map.java' now successfully runs 'Map2.java', 'Map3.java' and 'finalMath.java'
 # What Is Left To Do: 
 Randomize enemy coords   
-Make objective to fight enemies before exit  
 ASCII Art?
