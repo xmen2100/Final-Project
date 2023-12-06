@@ -11,8 +11,8 @@ public class Map {
         char[][] gameMap = generateMap(rows, columns);
     
         // starting player coords (ALWAYS make 1 LESS in x and y) if x = 10, choose x = 9, if y = 20, choose y = 19, etc
-        int playerXcoord = 5;   // x coord for player
-        int playerYcoord = 24;   // y coord for player
+        int playerXcoord = 5;   // x coord for player '#' are included 
+        int playerYcoord = 24;   // y coord for player '#' are included
 
         // player
         gameMap[playerYcoord][playerXcoord] = '@';
