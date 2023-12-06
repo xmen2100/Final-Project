@@ -6,12 +6,12 @@ public class Map2 {
     static int exitXcoord = 64; // x coord for exit (ALWAYS subtract 1)
     static int exitYcoord = 0; // y coord for exit (ALWAYS subtract 1)
 
-    // enemy coord
-    static int enemyXcoord = 64; // x coord for enemy (ALWAYS subtract 1)
-    static int enemyYcoord = 4; // y coord for enemy (ALWAYS subtract 1)
+    // enemy coords (multiple enemies)
+    static int[] enemyXcoords = {10, 24, 3, 33, 47, 52, 61, 40, 44, 21}; // x coord for enemy (ALWAYS subtract 1)
+    static int[] enemyYcoords = {10, 20, 2, 3, 22, 11, 35, 30, 14, 6}; // y coord for enemy (ALWAYS subtract 1)
 
     // number of enemy to defeat
-    static int targetNumEnemyToDefeat = 1; // number of enemy to defeat
+    static int targetNumEnemyToDefeat = 10; // number of enemy to defeat
 
     public static void main(String[] args) {
         Scanner userInputScanner = new Scanner(System.in);
@@ -67,8 +67,14 @@ public class Map2 {
             boolean isValidMove = newPlayerYcoord >= 0 && newPlayerYcoord < rows && newPlayerXcoord >= 0
                     && newPlayerXcoord < columns && gameMap[newPlayerYcoord][newPlayerXcoord] != '#';
 
-            // check if player land on enemy
-            boolean landedOnEnemy = newPlayerYcoord == enemyYcoord && newPlayerXcoord == enemyXcoord;
+            // check if player landed on any enemy
+            boolean landedOnEnemy = false;
+            for (int i = 0; i < enemyXcoords.length; i++) {
+                if (newPlayerYcoord == enemyYcoords[i] && newPlayerXcoord == enemyXcoords[i]) {
+                    landedOnEnemy = true;
+                    break;
+                }
+            }
 
             // Update player position only if it's a valid move
             if (isValidMove) {
@@ -143,7 +149,14 @@ public class Map2 {
         }
 
         map[exitYcoord][exitXcoord] = 'X'; // X for exit
-        map[enemyYcoord][enemyXcoord] = '?'; // enemy
+        
+        // set enemy positions
+        for (int i = 0; i < enemyXcoords.length; i++) {
+            int enemyX = enemyXcoords[i];
+            int enemyY = enemyYcoords[i];
+            map[enemyY][enemyX] = '?'; // enemy
+        }
+        
         return map;
     }
 

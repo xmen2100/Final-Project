@@ -6,9 +6,9 @@ public class Map {
     static int exitXcoord = 51; // x coord for exit (ALWAYS subtract 1)
     static int exitYcoord = 0; // y coord for exit (ALWAYS subtract 1)
 
-    // enemy coord
-    static int enemyXcoord = 10; // x coord for enemy (ALWAYS subtract 1)
-    static int enemyYcoord = 10; // y coord for enemy (ALWAYS subtract 1)
+    // enemy coords (multiple enemies)
+    static int[] enemyXcoords = {10, 24, 3, 33, 47}; // x coord for enemy (ALWAYS subtract 1)
+    static int[] enemyYcoords = {10, 20, 2, 3, 22}; // y coord for enemy (ALWAYS subtract 1)
 
     // number of enemy to defeat
     static int targetNumEnemyToDefeat = 5; // number of enemy to defeat
@@ -67,9 +67,15 @@ public class Map {
             boolean isValidMove = newPlayerYcoord >= 0 && newPlayerYcoord < rows && newPlayerXcoord >= 0
                     && newPlayerXcoord < columns && gameMap[newPlayerYcoord][newPlayerXcoord] != '#';
 
-            // check if player land on enemy
-            boolean landedOnEnemy = newPlayerYcoord == enemyYcoord && newPlayerXcoord == enemyXcoord;
-
+            // check if player landed on any enemy
+            boolean landedOnEnemy = false;
+            for (int i = 0; i < enemyXcoords.length; i++) {
+                if (newPlayerYcoord == enemyYcoords[i] && newPlayerXcoord == enemyXcoords[i]) {
+                    landedOnEnemy = true;
+                    break;
+                }
+            }
+            
             // Update player position only if it's a valid move
             if (isValidMove) {
                 // Clear previous player position
@@ -143,7 +149,14 @@ public class Map {
         }
 
         map[exitYcoord][exitXcoord] = 'X'; // X for exit
-        map[enemyYcoord][enemyXcoord] = '?'; // enemy
+
+        // set enemy positions
+        for (int i = 0; i < enemyXcoords.length; i++) {
+            int enemyX = enemyXcoords[i];
+            int enemyY = enemyYcoords[i];
+            map[enemyY][enemyX] = '?'; // enemy
+        }
+        
         return map;
     }
 
