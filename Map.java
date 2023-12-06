@@ -31,6 +31,16 @@ public class Map {
             map[0][j] = '#';          // Top wall
             map[x - 1][j] = '#';      // Bottom wall
         }
+        
+
+        int exitXcoord = 45;     // x coord for exit
+        int exitYcoord = 0;     // y coord for exit
+        map[exitYcoord][exitXcoord] = 'E';      // E for exit
+
+        
+        int playerXcoord = 2;   // x coord for player
+        int playerYcoord = 25;   // y coord for player
+        map[playerYcoord][playerXcoord] = '@';      // @ for player
 
         return map;
     }
