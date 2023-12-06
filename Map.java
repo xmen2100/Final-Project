@@ -1,9 +1,9 @@
 public class Map {
     public static void main(String[] args) {
         // how many rows
-        int rows = 100;
+        int rows = 27;
         // how many columns
-        int columns = 100;
+        int columns = 50;
 
         // 2d array of chars
         char[][] gameMap = generateMap(rows, columns);
@@ -14,22 +14,22 @@ public class Map {
         // plug in number of rows and columns in map
         char[][] map = new char[x][y];
 
-        // Fill the map with empty spaces
+        // these are empty spaces
         for (int i = 0; i < x; i++) {
             for (int j = 0; j < y; j++) {
-                map[i][j] = ' ';
+                map[i][j] = '.';
             }
         }
 
-        // Add walls 
+        // these are walls 
         for (int i = 0; i < x; i++) {
-            map[i][0] = '|';          // Left wall
-            map[i][y - 1] = '|';      // Right wall
+            map[i][0] = '#';          // Left wall
+            map[i][y - 1] = '#';      // Right wall
         }
 
         for (int j = 0; j < y; j++) {
-            map[0][j] = '_';          // Top wall
-            map[x - 1][j] = '-';      // Bottom wall
+            map[0][j] = '#';          // Top wall
+            map[x - 1][j] = '#';      // Bottom wall
         }
 
         return map;
