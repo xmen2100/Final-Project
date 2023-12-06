@@ -6,52 +6,71 @@ public class Map {
         int rows = 27;
         // how many columns
         int columns = 50;
-
+    
         // 2d array of chars
         char[][] gameMap = generateMap(rows, columns);
-
+    
         // starting player coords
         int playerXcoord = 25;   // x coord for player
         int playerYcoord = 25;   // y coord for player
-
+    
         // player
         gameMap[playerYcoord][playerXcoord] = '@';
-
+    
         // print initial map
         printMap(gameMap);
-
+    
         // game loop
         while (true) {
             // detect user input
             char move = getUserMove();
-
-            // update player position
-            updatePlayerPosition(gameMap, move, playerXcoord, playerYcoord);
-
-            // update player position from keys pressed
+    
+            // update player coordinates
+            int newPlayerXcoord = playerXcoord;
+            int newPlayerYcoord = playerYcoord;
+    
             switch (move) {
                 case 'W':
-                    playerYcoord--;     // moves up
+                    newPlayerYcoord--; // moves up
                     break;
                 case 'A':
-                    playerXcoord--;     // moves left
+                    newPlayerXcoord--; // moves left
                     break;
                 case 'S':
-                    playerYcoord++;     // moves down
+                    newPlayerYcoord++; // moves down
                     break;
                 case 'D':
-                    playerXcoord++;     // moves right
+                    newPlayerXcoord++; // moves right
                     break;
             }
-
+    
+            // Check if the new position is within bounds and is not a wall
+            boolean isValidMove = newPlayerYcoord >= 0 && newPlayerYcoord < rows &&
+                                  newPlayerXcoord >= 0 && newPlayerXcoord < columns &&
+                                  gameMap[newPlayerYcoord][newPlayerXcoord] != '#';
+    
+            // Update player position only if it's a valid move
+            if (isValidMove) {
+                // Clear previous player position
+                gameMap[playerYcoord][playerXcoord] = '.';
+    
+                // Set new player position
+                gameMap[newPlayerYcoord][newPlayerXcoord] = '@';
+    
+                // Update player coordinates after the move is validated
+                playerXcoord = newPlayerXcoord;
+                playerYcoord = newPlayerYcoord;
+            }
+    
             // clear console
             System.out.println("\u001b[2J\u001b[H");
-            System.out.flush(); 
-
+            System.out.flush();
+    
             // print updated map
             printMap(gameMap);
         }
     }
+    
 
     public static char[][] generateMap(int x, int y) {
         // plug in number of rows and columns in map
@@ -111,47 +130,39 @@ public class Map {
         int rows = map.length;
         int columns = map[0].length;
     
-        // Check if the new position is within bounds and is not a wall
-        boolean isValidMove = false;
+        // Calculate the new position based on the move
+        int newPlayerXcoord = playerXcoord;
+        int newPlayerYcoord = playerYcoord;
+    
         switch (move) {
             case 'W':
-                isValidMove = playerYcoord - 1 >= 0 && map[playerYcoord - 1][playerXcoord] != '#';
+                newPlayerYcoord--; // moves up
                 break;
             case 'A':
-                isValidMove = playerXcoord - 1 >= 0 && map[playerYcoord][playerXcoord - 1] != '#';
+                newPlayerXcoord--; // moves left
                 break;
             case 'S':
-                isValidMove = playerYcoord + 1 < rows && map[playerYcoord + 1][playerXcoord] != '#';
+                newPlayerYcoord++; // moves down
                 break;
             case 'D':
-                isValidMove = playerXcoord + 1 < columns && map[playerYcoord][playerXcoord + 1] != '#';
+                newPlayerXcoord++; // moves right
                 break;
         }
+    
+        // Check if the new position is within bounds and is not a wall
+        boolean isValidMove = newPlayerYcoord >= 0 && newPlayerYcoord < rows &&
+                              newPlayerXcoord >= 0 && newPlayerXcoord < columns &&
+                              map[newPlayerYcoord][newPlayerXcoord] != '#';
     
         // Update player position only if it's a valid move
         if (isValidMove) {
             // Clear previous player position
             map[playerYcoord][playerXcoord] = '.';
     
-            // Update player position
-            switch (move) {
-                case 'W':
-                    playerYcoord--; // moves up
-                    break;
-                case 'A':
-                    playerXcoord--; // moves left
-                    break;
-                case 'S':
-                    playerYcoord++; // moves down
-                    break;
-                case 'D':
-                    playerXcoord++; // moves right
-                    break;
-            }
-    
             // Set new player position
-            map[playerYcoord][playerXcoord] = '@';
+            map[newPlayerYcoord][newPlayerXcoord] = '@';
         }
     }
+    
  
 }
