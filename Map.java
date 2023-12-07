@@ -1,3 +1,9 @@
+// Dungeon Crawl from Team 06
+// Team member one: Clinton Ma
+// Team member two: Andrew Basurto
+// Team member three: Connor Wilson
+
+// Run Map.java
 import java.io.*;
 import java.util.Scanner;
 
