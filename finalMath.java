@@ -107,6 +107,7 @@ public class finalMath {
               floor = subtraction(floor, lives);
           } else if (option.equals("3")) {
               System.out.println("Selected Multiplication");
+              floor = multiplication(floor, lives);
           } else if (option.equals("q")|option.equals("Q")|option.equals("4")) {
               System.out.println("You Quit\n");
               quit=true;
