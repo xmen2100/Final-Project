@@ -4,8 +4,8 @@ public class finalMath {
     public static int addition(int floor, int lives) {
         System.out.println("You will never defeat me. Unless you can add up your damage correctly.");
 
-        int add1 = (int) ((Math.random() * ((10+floor)+1) + 1));
-        int add2 = (int) ((Math.random() * ((10+floor)+1) + 1));
+        int add1 = (int) ((Math.random() * ((10*floor)/2) + 1));
+        int add2 = (int) ((Math.random() * ((10*floor)/2) + 1));
         int addition = add1 + add2;
         System.out.println("You will need to defeat me with a perfect value to get to " + addition+".");
         System.out.println("floor:"+ floor);
