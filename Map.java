@@ -49,15 +49,19 @@ public class Map {
             int newPlayerYcoord = playerYcoord;
 
             switch (move) {
+                case 'w':
                 case 'W':
                     newPlayerYcoord--; // moves up
                     break;
+                case 'a':
                 case 'A':
                     newPlayerXcoord--; // moves left
                     break;
+                case 's':
                 case 'S':
                     newPlayerYcoord++; // moves down
                     break;
+                case 'd':
                 case 'D':
                     newPlayerXcoord++; // moves right
                     break;
